@@ -1,9 +1,9 @@
 spring:
   datasource:
-    url: jdbc:oracle:thin:@//localhost:1521/your_service_name
-    username: your_username
-    password: your_password
-    driver-class-name: oracle.jdbc.OracleDriver
+    url: jdbc:h2:mem:testdb;DB_CLOSE_ON_EXIT=FALSE;DB_CLOSE_DELAY=-1
+    username: sa
+    password:
+    driver-class-name: org.h2.Driver
     hikari:
       maximum-pool-size: 120
       minimum-idle: 100
@@ -11,6 +11,10 @@ spring:
       connection-timeout: 20000
       validation-timeout: 5000
       keepalive-time: 240000
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
 
 logging:
   level:
