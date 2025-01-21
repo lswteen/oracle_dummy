@@ -1,7 +1,7 @@
 package com.farfarcoder.db;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -11,7 +11,8 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
-import jakarta.annotation.PreDestroy;
+import javax.annotation.PreDestroy;  // jakarta -> javax로 변경
+import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -21,8 +22,6 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicLong;
 
 import com.zaxxer.hikari.HikariDataSource;
-
-import javax.sql.DataSource;
 
 @Slf4j
 @SpringBootApplication
@@ -35,12 +34,18 @@ public class DbApplication implements CommandLineRunner {
 	private final List<ConnectionWrapper> connections = new ArrayList<>();
 	private volatile boolean isRunning = true;
 
-	@Data
-	@AllArgsConstructor
+	@Getter
+	@Setter
 	private static class ConnectionWrapper {
 		private Connection connection;
 		private int connectionId;
 		private AtomicLong queryCount;
+
+		public ConnectionWrapper(Connection connection, int connectionId, AtomicLong queryCount) {
+			this.connection = connection;
+			this.connectionId = connectionId;
+			this.queryCount = queryCount;
+		}
 	}
 
 	public static void main(String[] args) {
