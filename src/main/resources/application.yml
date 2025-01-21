@@ -1,0 +1,18 @@
+spring:
+  datasource:
+    url: jdbc:oracle:thin:@//localhost:1521/your_service_name
+    username: your_username
+    password: your_password
+    driver-class-name: oracle.jdbc.OracleDriver
+    hikari:
+      maximum-pool-size: 120
+      minimum-idle: 100
+      idle-timeout: 300000
+      connection-timeout: 20000
+      validation-timeout: 5000
+      keepalive-time: 240000
+
+logging:
+  level:
+    com.example.oracletest: INFO
+    com.zaxxer.hikari: INFO
